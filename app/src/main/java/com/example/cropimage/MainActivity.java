@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         imageview = findViewById(R.id.imageview);
+        imageview.setTag("default");
+
         button = findViewById(R.id.botton);
 
         imageview.setOnClickListener(new View.OnClickListener() {
@@ -44,8 +46,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (imageview.getDrawable().getCurrent().getConstantState().equals
-                        (getResources().getDrawable(R.drawable.ic_add).getConstantState())){
+                if (imageview.getTag().equals("default")){
                     Toast.makeText(MainActivity.this, "尚未選擇圖片",Toast.LENGTH_SHORT).show();
                 }else {
                     CropImage.activity(imageUri)
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 && data != null && data.getData() != null){
             imageUri = data.getData();
             imageview.setImageURI(imageUri);
+            imageview.setTag("isSelected");
         }
 
         else if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
